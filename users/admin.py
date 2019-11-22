@@ -28,6 +28,7 @@ class CustomUserAdmin(UserAdmin):
 
     list_display = (
         "username",
+        "first_name",
         "state",
         "business_owner",
         "email_verified",

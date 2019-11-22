@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from core import models as core_models
 
@@ -29,9 +30,9 @@ class Photo(core_models.TimeStampedModel):
     """ Photo Model Definition """
 
     caption = models.CharField(max_length=100)
-    file = models.ImageField()
+    file = models.ImageField(upload_to="food_photos")
     menu = models.ForeignKey(
-        "Menu", related_name="photo", on_delete=models.CASCADE, blank=True
+        "Menu", related_name="photos", on_delete=models.CASCADE, blank=True
     )
 
     def __str__(self):
@@ -57,3 +58,9 @@ class Menu(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def in_progress(self):
+        today = timezone.now().date()
+        return self.stock > 0 and self.created.date() == today
+
+    in_progress.boolean = True

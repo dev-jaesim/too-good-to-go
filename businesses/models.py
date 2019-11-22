@@ -32,10 +32,22 @@ class Business(core_models.TimeStampedModel):
     owner = models.ForeignKey(
         "users.User", related_name="businesses", on_delete=models.CASCADE,
     )
-    avatar = models.ImageField(null=True, blank=True)
+    avatar = models.ImageField(upload_to="business_photo", null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "businesses"
 
     def __str__(self):
         return self.name
+
+    def total_rating(self):
+        all_reviews = self.reviews.all()
+        total_rating = 0
+
+        if all_reviews.count() > 0:
+            for review in all_reviews:
+                total_rating += review.rating_average()
+            return round(total_rating / len(all_reviews), 2)
+        return "0"
+
+    total_rating.short_description = "Avg"

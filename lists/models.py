@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.db import models
 from core import models as core_models
 
@@ -11,3 +10,8 @@ class List(core_models.TimeStampedModel):
         date = self.created.date()
         format_date = date.strftime("%Y/%m/%d")
         return f"{format_date} / {self.user}"
+
+    def count_menus(self):
+        return self.menu.count()
+
+    count_menus.short_description = "Menu Number"

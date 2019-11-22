@@ -35,7 +35,7 @@ class User(AbstractUser):
     )
 
     state = models.CharField(max_length=50, choices=STATE_CHOICES, default="NSW")
-    avatar = models.ImageField(null=True, blank=True)
+    avatar = models.ImageField(upload_to="avatar", null=True, blank=True)
     business_owner = models.BooleanField(default=False)
     login_method = models.CharField(
         max_length=50, choices=LOGIN_CHOICES, default="email"
