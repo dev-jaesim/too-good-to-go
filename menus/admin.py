@@ -27,10 +27,17 @@ class PhotoAdmin(admin.ModelAdmin):
     get_thumbnail.short_description = "Thumbnail"
 
 
+class PhotoInline(admin.TabularInline):
+
+    model = models.Photo
+
+
 @admin.register(models.Menu)
 class MenuAdmin(admin.ModelAdmin):
 
     """ Menu Admin Definition """
+
+    inlines = (PhotoInline,)
 
     fieldsets = (
         ("Basic Info", {"fields": ("name", "description", "price", "stock",)},),
@@ -39,18 +46,18 @@ class MenuAdmin(admin.ModelAdmin):
     )
 
     list_display = (
-        "in_progress",
         "name",
         "description",
         "price",
         "stock",
         "business",
         "count_photos",
+        "in_progress",
     )
 
     list_filter = ("food_type",)
 
-    raw_id_fields = ("business",)
+    # raw_id_fields = ("business",)
 
     filter_horizontal = ("food_type",)
 

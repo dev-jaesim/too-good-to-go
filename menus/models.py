@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from core import models as core_models
@@ -64,3 +65,17 @@ class Menu(core_models.TimeStampedModel):
         return self.stock > 0 and self.created.date() == today
 
     in_progress.boolean = True
+
+    def first_photo(self):
+        try:
+            (photo,) = self.photos.all()[:1]
+            return photo.file.url
+        except ValueError:
+            return None
+
+    def get_next_four_photos(self):
+        photos = self.photos.all()[1:5]
+        return photos
+
+    def get_absolute_url(self):
+        return reverse("menus:detail", kwargs={"pk": self.pk})

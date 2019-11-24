@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block page_title %}
+
+{{menu.name}}
+
+{% endblock page_title %}
+
+
+{% block content %}
+
+<p>{{menu.name}}</p>
+<p>{{menu.description}}</p>
+<p>{{menu.price}}</p>
+<p>{{menu.business}}</p>
+{% for f in menu.food_type.all %}
+<p>{{f}}</p>
+{% endfor %}
+<p><img src="{{menu.first_photo}}" style="width: 100px;"></p>
+
+{% endblock content %}
