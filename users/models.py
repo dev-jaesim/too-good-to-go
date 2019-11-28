@@ -27,11 +27,9 @@ class User(AbstractUser):
 
     LOGIN_EMAIL = "email"
     LOGIN_GITHUB = "github"
-    LOGIN_KAKAO = "kakao"
     LOGIN_CHOICES = (
         (LOGIN_EMAIL, "Email"),
         (LOGIN_GITHUB, "Github"),
-        (LOGIN_KAKAO, "Kakao"),
     )
 
     state = models.CharField(max_length=50, choices=STATE_CHOICES, default="NSW")

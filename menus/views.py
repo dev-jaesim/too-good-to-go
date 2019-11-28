@@ -8,14 +8,18 @@ class HomeView(ListView):
 
     """ HomeView Definition """
 
+    logged_user = None
+
     model = models.Menu
     paginate_by = 5
     # paginate_orphans = 3
     context_object_name = "menus"
-    # user_state = "ACT"
 
-    # def get_queryset(self):
-    #     return models.Menu.objects.filter(business__state=self.user_state)
+    def get_queryset(self):
+        if self.request.user.is_anonymous:
+            return models.Menu.objects.all()
+
+        return models.Menu.objects.filter(business__state=self.request.user.state)
 
 
 class MenuDetail(DetailView):
