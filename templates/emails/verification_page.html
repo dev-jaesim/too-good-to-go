@@ -5,5 +5,7 @@ Email verification
 {% endblock page_title %}
 
 {% block content %}
-<h1>Your Email address has been verified. Please login again.</h1>
+<h1>
+    Your Email address has been verified. Please click <a href="{% url "core:home" %}">here</a> to go to the main page.
+</h1>
 {% endblock content %}

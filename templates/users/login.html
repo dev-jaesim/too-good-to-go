@@ -8,6 +8,7 @@ Login
 {% endblock search-bar %}
 
 {% block content %}
+{% include 'partials/social_login.html' %}
 <div>
     <form method="POST">
         {% csrf_token %}
@@ -16,7 +17,7 @@ Login
     </form>
     <div>
         <span>Don't have an account?</span>
-        <a href="#">Sign up</a>
+        <a href="{% url "users:signup" %}">Sign up</a>
     </div>
 </div>
 {% endblock content %}
