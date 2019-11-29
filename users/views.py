@@ -1,9 +1,9 @@
 from django.views.generic import FormView
-from django.shortcuts import redirect, reverse
+from django.shortcuts import redirect, reverse, render
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from . import forms
+from . import forms, models
 
 
 class LoginView(FormView):
@@ -47,5 +47,18 @@ class SignUpView(FormView):
         user = authenticate(self.request, username=email, password=password)
         if user is not None:
             login(self.request, user)
-        # user.verify_email()
+        user.verify_email()
         return super().form_valid(form)
+
+
+def complete_verification(request, key):
+    try:
+        user = models.User.objects.get(email_secret=key)
+        user.email_verified = True
+        user.email_secret = ""
+        user.save()
+        # to do: add a success message
+    except models.User.DoesNotExist:
+        # to do: add an error message
+        pass
+    return render(request, "emails/verification_page.html")
