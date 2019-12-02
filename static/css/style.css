@@ -1,0 +1,138 @@
+/* display declaration */
+.flex {
+    display: flex;
+}
+
+
+/* flex wrap declaration */
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+
+/* width declaration */
+.w-10per {
+    width: 10%;
+}
+
+.w-50per {
+    width: 50%;;
+}
+
+.w-95per {
+    width: 95%;
+}
+
+
+/* height declaration */
+.h-200 {
+    height: 200px;
+}
+
+
+/* flex-grow declaration */
+.f-g-1 {
+    flex-grow: 1;
+}
+
+.f-g-3 {
+    flex-grow: 3;
+}
+
+.f-g-6 {
+    flex-grow: 6;
+}
+
+
+/* flex-basis declaration */
+.f-b-30per {
+    flex-basis: 30%;
+}
+
+
+/* justify-item declaration */
+.align-item-center {
+    align-items: center;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+
+/* margin declaration */
+.m-r-40px {
+    margin-right: 40px;
+}
+
+.m-b-0 {
+    margin-bottom: 0;
+}
+
+.m-h-center {
+    margin: 0 auto;
+}
+
+.m-t-10 {
+    margin-top: 10px;
+}
+
+.m-b-10 {
+    margin-bottom: 10px;
+}
+
+.m-l-10 {
+    margin-left: 10px;
+}
+
+.m-r-10 {
+    margin-right: 10px;
+}
+
+
+/* padding declaration */
+.p-l-40 {
+    padding-left: 40px;
+}
+
+.p-r-40 {
+    padding-right: 40px;
+}
+
+
+/* custom declaration */
+.child-has-m-r-40px li {
+    margin-right: 40px;
+}
+
+
+/* position declaration */
+.position-relative {
+    position: relative;
+}
+
+
+.food-card-item {
+    border: 1px solid;
+    border-radius: 5px;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.food-card-item-title {
+    position: absolute;
+    bottom: 5px;
+    text-align: center;
+    width: 100%;
+    background: rgba(255,255,255,0.5);
+}
+
+footer {
+    background: black;
+    color: white;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

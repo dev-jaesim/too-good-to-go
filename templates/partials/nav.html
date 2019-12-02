@@ -1,9 +1,9 @@
-<a href="{% url 'core:home' %}">GOOD</a>
-<ul>
+<a href="{% url 'core:home' %}" class="flex f-g-1 align-item-center justify-content-center">GOOD</a>
+<ul class="flex f-g-6 m-b-0 child-has-m-r-40px">
     {% if user.is_authenticated %}
     <li><a href="{% url "users:logout" %}">Log out</a></li>
     {% else %}
-    <li class="nav_link"><a href="{% url "users:signup" %}">Sign up</a></li>
+    <li><a href="{% url "users:signup" %}">Sign up</a></li>
     <li><a href="{% url "users:login" %}">Log in</a></li>
     {% endif %}
 </ul>

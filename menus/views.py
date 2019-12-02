@@ -2,6 +2,7 @@ from django.views.generic import View, ListView, DetailView
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from . import models, forms
+from slider import models as slider_models
 
 
 class HomeView(ListView):
@@ -20,6 +21,11 @@ class HomeView(ListView):
             return models.Menu.objects.all()
 
         return models.Menu.objects.filter(business__state=self.request.user.state)
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context["images"] = slider_models.Slider.objects.all()
+        return context
 
 
 class MenuDetail(DetailView):
