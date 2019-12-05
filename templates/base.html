@@ -9,20 +9,21 @@
     <link rel="stylesheet" href="{% static "css/style.css" %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <title>{% block page_title %}{% endblock page_title %}</title>
 </head>
 
 <body>
+    {% include 'partials/messages.html' %}
     <header class="flex">
         {% include 'partials/nav.html' %}
-
         {% block search-bar %}
         <form method="get" action="{% url 'menus:search' %}"
             class="flex align-item-center f-g-3 justify-content-center">
             <select name="state">
-                <option value="None">Any State</option>
+                <option value="None">Search by state</option>
                 <option value="ACT">Australian Capital Territory</option>
                 <option value="NSW">New South Wales</option>
                 <option value="NT">Nothern Territory</option>
@@ -35,7 +36,6 @@
             <button>Submit</button>
         </form>
         {% endblock search-bar %}
-
     </header>
 
     {% if images %}

@@ -2,22 +2,28 @@
 
 
 {% block page_title %}
-
 {{menu.name}}
-
 {% endblock page_title %}
 
 
 {% block content %}
 
-<p>{{menu.name}}</p>
-<p>{{menu.description}}</p>
-<p>{{menu.price}}</p>
-<p>{{menu.business}}</p>
-<p>{{menu.business.state}}</p>
-{% for f in menu.food_type.all %}
-<p>{{f}}</p>
-{% endfor %}
-<p><img src="{{menu.first_photo}}" style="width: 100px;"></p>
+<div class="menu-detail">
+    <p><img src="{{menu.first_photo}}" style="width: 300px;"></p>
+    <p><b>Name: </b>{{menu.name}}</p>
+    <p><b>Description: </b>{{menu.description}}</p>
+    <p><b>Price: </b>{{menu.price}}</p>
+    <p><b>Offered by: </b>{{menu.business}} / {{menu.business.total_rating}}</p>
+    <p><b>Available State: </b>{{menu.business.state}}</p>
+    <p><b>Food Type: </b>
+        {% for f in menu.food_type.all %}
+        {% if forloop.last %}
+        {{ f }}
+        {% else %}
+        {{ f }},
+        {% endif %}
+        {% endfor %}
+    </p>
+</div>
 
 {% endblock content %}
