@@ -11,7 +11,7 @@ Search
 
 <h2>Search</h2>
 
-<form method="get" action="{% url "menus:search" %}">
+<form method="get" action="{% url "menus:search" %}" class="signup-form">
     {{form.as_p}}
     <button>Search</button>
 </form>
@@ -19,7 +19,10 @@ Search
 <h3>Results</h3>
 
 {% for menu in menus %}
-<h3><a href="{% url 'menus:detail' menu.pk %}">{{menu.name}}</a></h3>
+<div class="flex">
+    {% include 'mixins/menu_card.html' with menu=menu %}
+</div>
+<!-- <h3><a href="{% url 'menus:detail' menu.pk %}">{{menu.name}}</a></h3> -->
 {% endfor %}
 
 

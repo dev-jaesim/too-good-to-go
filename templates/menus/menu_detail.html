@@ -13,7 +13,9 @@
     <p><b>Name: </b>{{menu.name}}</p>
     <p><b>Description: </b>{{menu.description}}</p>
     <p><b>Price: </b>{{menu.price}}</p>
-    <p><b>Offered by: </b>{{menu.business}} / {{menu.business.total_rating}}</p>
+    <p><b>Offered by: </b><a href="{{menu.business.get_absolute_url}}">{{menu.business}}</a> /
+        {{menu.business.total_rating}}
+    </p>
     <p><b>Available State: </b>{{menu.business.state}}</p>
     <p><b>Food Type: </b>
         {% for f in menu.food_type.all %}
@@ -23,6 +25,9 @@
         {{ f }},
         {% endif %}
         {% endfor %}
+    </p>
+    <p><b>Stock: </b>
+        {{menu.stock}}
     </p>
 </div>
 

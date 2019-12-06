@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+{{user_obj.first_name}}'s Profile
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="menu-detail">
+    <div>
+        <div>
+            <span><b>Name: </b>{{user_obj.first_name}} {{user_obj.last_name}}</span>
+            {% if user == user_obj %}
+            <a href="{% url 'users:update' %}">Edit Profile</a>
+            {% endif %}
+        </div>
+        <div>
+            <span><b>Email: </b>{{user_obj.email}}</span>
+        </div>
+        <div>
+            <span><b>State: </b>{{user_obj.state}}</span>
+        </div>
+    </div>
+    {% if user_obj.businesses.count > 0 %}
+    <h3>{{user_obj.first_name}}'s Restaurant</h3>
+    <div>
+        {% for business in user_obj.businesses.all  %}
+        <div>
+            {{business}} <a href="{% url 'businesses:update-business' business.pk %}">Edit This Business</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

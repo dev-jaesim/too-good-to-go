@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+{{business_obj.name}}'s Profile
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="menu-detail">
+    <div>
+        <span><b>Name: </b>{{business_obj.name}}</span>
+    </div>
+    <div>
+        <span><b>Description: </b>{{business_obj.description}}</span>
+    </div>
+    <div>
+        <span><b>State: </b>{{business_obj.state}}</span>
+    </div>
+    <div>
+        <span><b>Rate: </b>{{business_obj.total_rating}}</span>
+    </div>
+    {% if business_obj.menus.count > 0 %}
+    <h3>{{business_obj.name}}'s currently available menu</h3>
+    <div>
+        {% for menu in business_obj.menus.all %}
+        <div class="w-50per">
+            {% include 'mixins/menu_card.html' with menu=menu %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

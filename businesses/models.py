@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from core import models as core_models
 
 
@@ -51,3 +52,6 @@ class Business(core_models.TimeStampedModel):
         return "0"
 
     total_rating.short_description = "Avg"
+
+    def get_absolute_url(self):
+        return reverse("businesses:profile", kwargs={"pk": self.pk})

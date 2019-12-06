@@ -17,7 +17,7 @@
 
 <body>
     {% include 'partials/messages.html' %}
-    <header class="flex">
+    <header class="flex b-b">
         {% include 'partials/nav.html' %}
         {% block search-bar %}
         <form method="get" action="{% url 'menus:search' %}"

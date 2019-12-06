@@ -74,11 +74,11 @@
 }
 
 .m-t-10 {
-    margin-top: 10px;
+    margin-top: 10px !important;
 }
 
 .m-b-10 {
-    margin-bottom: 10px;
+    margin-bottom: 10px !important;
 }
 
 .m-l-10 {
@@ -100,15 +100,21 @@
 }
 
 
-/* custom declaration */
-.child-has-m-r-40px li {
-    margin-right: 40px;
-}
-
-
 /* position declaration */
 .position-relative {
     position: relative;
+}
+
+
+/* boarder declaration */
+.b-b {
+    border-bottom: 1px solid;
+}
+
+
+/* custom declaration */
+.child-has-m-r-40px li {
+    margin-right: 40px;
 }
 
 
