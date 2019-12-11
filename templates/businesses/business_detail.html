@@ -19,6 +19,15 @@
     <div>
         <span><b>Rate: </b>{{business_obj.total_rating}}</span>
     </div>
+    <div>
+        <span><b>Review: </b>{{business_obj.reviews.count}}</span>
+        <div class="review">
+            {% for r in business_obj.reviews.all %}
+            <p class="review-item"><b>{{r.user}} / {{r.created|date:'F-Y'}}:</b></p>
+            <p>{{r.review}}</p>
+            {% endfor %}
+        </div>
+    </div>
     {% if business_obj.menus.count > 0 %}
     <h3>{{business_obj.name}}'s currently available menu</h3>
     <div>

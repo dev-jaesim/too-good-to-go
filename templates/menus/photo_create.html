@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Upload photo
+{% endblock page_title %}
+
+{% block search-bar %}
+{% endblock search-bar %}
+
+{% block content %}
+
+<div class="signup-form">
+
+    {% include 'mixins/menu/menu_form.html' with form=form cta="Upload photo" %}
+
+</div>
+{% endblock content %}

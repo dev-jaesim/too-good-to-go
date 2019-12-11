@@ -16,6 +16,8 @@
     <p><b>Offered by: </b><a href="{{menu.business.get_absolute_url}}">{{menu.business}}</a> /
         {{menu.business.total_rating}}
     </p>
+    <p>
+        <b>Owner: </b><a href="{{menu.business.owner.get_absolute_url}}">{{menu.business.owner}}</a></p>
     <p><b>Available State: </b>{{menu.business.state}}</p>
     <p><b>Food Type: </b>
         {% for f in menu.food_type.all %}
@@ -29,6 +31,11 @@
     <p><b>Stock: </b>
         {{menu.stock}}
     </p>
+
+    {% if user.pk == menu.business.owner.pk %}
+    <p><a href="{% url 'menus:update-menu' menu.pk %}">Update menu</a></p>
+    {% endif %}
+
 </div>
 
 {% endblock content %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Update Menu
+{% endblock page_title %}
+
+{% block search-bar %}
+{% endblock search-bar %}
+
+{% block content %}
+
+<div class="signup-form m-t-10 m-b-10">
+    {% include 'mixins/auth/auth_form.html' with form=form cta="Update menu" %}
+    <p><a href="{% url 'menus:photos' menu.pk %}">Edit photo</a></p>
+</div>
+{% endblock content %}

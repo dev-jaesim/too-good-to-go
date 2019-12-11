@@ -33,3 +33,14 @@ class SearchForm(forms.Form):
         label="Food Type",
     )
 
+
+class CreatePhotoForm(forms.ModelForm):
+    class Meta:
+        model = models.Photo
+        fields = ("caption", "file")
+
+    def save(self, pk, *args, **kwargs):
+        photo = super().save(commit=False)
+        menu = models.Menu.objects.get(pk=pk)
+        photo.menu = menu
+        photo.save()

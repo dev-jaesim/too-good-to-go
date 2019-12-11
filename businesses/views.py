@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.views.generic import DetailView, UpdateView
 from . import models
 
@@ -23,9 +24,15 @@ class UpdateBusinessProfileView(UpdateView):
     )
     success_message = "Profile Updated"
 
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        return super().get(request, *args, **kwargs)
+    # def get(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     return super().get(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        business = super().get_object(queryset=queryset)
+        if business.owner.pk != self.request.user.pk:
+            raise Http404()
+        return business
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class=form_class)

@@ -1,6 +1,11 @@
-from django.views.generic import View, ListView, DetailView
-from django.shortcuts import render
+from django.http import Http404
+from django.views.generic import View, ListView, DetailView, UpdateView, FormView
+from django.shortcuts import render, reverse, redirect
 from django.core.paginator import Paginator
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from users import mixins as user_mixins
 from . import models, forms
 from slider import models as slider_models
 
@@ -69,3 +74,86 @@ class SearchView(View):
             form = forms.SearchForm()
 
         return render(request, "menus/search.html", {"form": form})
+
+
+class UpdateMenuView(UpdateView):
+
+    """ UpdateMenuView Definition """
+
+    model = models.Menu
+    template_name = "menus/update-menu.html"
+    fields = ("name", "description", "price", "stock", "food_type")
+    success_message = "Profile Updated"
+
+    def get_object(self, queryset=None):
+        menu = super().get_object(queryset=queryset)
+        if menu.business.owner.pk != self.request.user.pk:
+            raise Http404()
+        return menu
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.fields["name"].widget.attrs = {"placeholder": "Name"}
+        form.fields["description"].widget.attrs = {"placeholder": "Description"}
+        form.fields["price"].widget.attrs = {"placeholder": "price"}
+        form.fields["stock"].widget.attrs = {"placeholder": "stock"}
+        form.fields["food_type"].widget.attrs = {"placeholder": "food_type"}
+        return form
+
+
+class MenuPhotosView(user_mixins.LoggedInOnlyView, DetailView):
+
+    """ MenuPhotosView Definition """
+
+    model = models.Menu
+    template_name = "menus/menu_photos.html"
+
+    def get_object(self, queryset=None):
+        menu = super().get_object(queryset=queryset)
+        if menu.business.owner.pk != self.request.user.pk:
+            raise Http404()
+        return menu
+
+
+class AddPhotoView(user_mixins.LoggedInOnlyView, FormView):
+
+    """ AddPhotoView Definition """
+
+    template_name = "menus/photo_create.html"
+    form_class = forms.CreatePhotoForm
+
+    def form_valid(self, form):
+        pk = self.kwargs.get("pk")
+        form.save(pk)
+        messages.success(self.request, "Photo Uploaded")
+        return redirect(reverse("menus:photos", kwargs={"pk": pk}))
+
+
+class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
+
+    """ EditPhotoView Definition """
+
+    model = models.Photo
+    template_name = "menus/photo_edit.html"
+    pk_url_kwarg = "photo_pk"
+    success_message = "Photo Updated"
+    fields = ("caption",)
+
+    def get_success_url(self):
+        menu_pk = self.kwargs.get("menu_pk")
+        return reverse("menus:photos", kwargs={"pk": menu_pk})
+
+
+@login_required
+def delete_photo(request, menu_pk, photo_pk):
+    user = request.user
+    try:
+        menu = models.Menu.objects.get(pk=menu_pk)
+        if menu.business.owner.pk != user.pk:
+            messages.error(request, "Cant delete that photo")
+        else:
+            models.Photo.objects.filter(pk=photo_pk).delete()
+            messages.success(request, "Photo Deleted")
+        return redirect(reverse("menus:photos", kwargs={"pk": menu_pk}))
+    except models.Room.DoesNotExist:
+        return redirect(reverse("core:home"))

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+{{menu.name}}'s Photo
+{% endblock page_title %}
+
+{% block search-bar %}
+{% endblock search-bar %}
+
+{% block content %}
+
+<div>
+    <div class="text-align-center">
+        <a href="{% url 'menus:add-photo' menu.pk %}">
+            <button class="m-t-10 m-b-10 photo-btn">
+                Upload Photo
+            </button>
+        </a>
+    </div>
+
+    {% for photo in menu.photos.all  %}
+    <div>
+        <div class="signup-form">
+            <img src="{{photo.file.url}}" style="width: 100%;">
+            <span><b>Caption: </b>{{photo.caption}}</span>
+        </div>
+        <div class="text-align-center">
+            <a href="{% url 'menus:edit-photo' menu.pk photo.pk %}">
+                <button class="m-t-10 m-b-10 photo-btn">
+                    Edit
+                </button>
+            </a>
+        </div>
+        <div class="text-align-center">
+            <a href="{% url 'menus:delete-photo' menu.pk photo.pk %}">
+                <button class="m-t-10 m-b-10 photo-btn">
+                    Delete
+                </button>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="text-align-center">
+        <a href="{% url 'menus:update-menu' menu.pk %}" class="photo-button">
+            <button class="m-t-10 m-b-10 photo-btn">
+                Back to edit room
+            </button>
+        </a>
+    </div>
+</div>
+{% endblock content %}

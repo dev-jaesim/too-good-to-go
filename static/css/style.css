@@ -112,6 +112,12 @@
 }
 
 
+/* text align declaration */
+.text-align-center {
+    text-align: center;
+}
+
+
 /* custom declaration */
 .child-has-m-r-40px li {
     margin-right: 40px;
@@ -174,6 +180,16 @@ footer {
     border-radius: 5px;
 }
 
+.review {
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.review-item {
+    margin: 10px 0;
+}
+
 .message {
     list-style: none;
     position: absolute;
@@ -212,4 +228,9 @@ footer {
         opacity: 0;
         transform: translateY(-10px);
     }
+}
+
+.photo-btn {
+    width: 130px;
+    border-radius: 5px;
 }

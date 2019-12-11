@@ -26,7 +26,10 @@
     <div>
         {% for business in user_obj.businesses.all  %}
         <div>
-            {{business}} <a href="{% url 'businesses:update-business' business.pk %}">Edit This Business</a>
+            <a href="{{business.get_absolute_url}}">{{business}}</a>
+            {% if user == business.owner %}
+            <a href="{% url 'businesses:update-business' business.pk %}"> / Edit This Business</a>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
