@@ -28,6 +28,17 @@
             {% endfor %}
         </div>
     </div>
+
+    {% if business_obj.owner == user %}
+    <div class="m-t-10 m-b-10">
+        <a href="{% url 'menus:create' business_obj.pk %}">
+            <button>
+                Add Menu
+            </button>
+        </a>
+    </div>
+    {% endif %}
+
     {% if business_obj.menus.count > 0 %}
     <h3>{{business_obj.name}}'s currently available menu</h3>
     <div>

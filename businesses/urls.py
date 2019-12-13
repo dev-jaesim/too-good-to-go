@@ -10,4 +10,5 @@ urlpatterns = [
         views.UpdateBusinessProfileView.as_view(),
         name="update-business",
     ),
+    path("create/", views.CreateBusinessView.as_view(), name="create"),
 ]

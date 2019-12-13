@@ -2,6 +2,7 @@
 <ul class="flex f-g-6 m-b-0 child-has-m-r-40px">
     {% if user.is_authenticated %}
     <li><a href="{{user.get_absolute_url}}">Profile</a></li>
+    <li><a href="{% url 'purchases:history' %}">Purchase History</a></li>
     <li><a href="{% url "users:logout" %}">Log out</a></li>
     {% else %}
     <li><a href="{% url "users:signup" %}">Sign up</a></li>

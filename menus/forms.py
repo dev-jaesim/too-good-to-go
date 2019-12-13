@@ -44,3 +44,19 @@ class CreatePhotoForm(forms.ModelForm):
         menu = models.Menu.objects.get(pk=pk)
         photo.menu = menu
         photo.save()
+
+
+class CreateMenuForm(forms.ModelForm):
+    class Meta:
+        model = models.Menu
+        fields = (
+            "name",
+            "description",
+            "price",
+            "stock",
+            "food_type",
+        )
+
+    def save(self, *args, **kwargs):
+        menu = super().save(commit=False)
+        return menu

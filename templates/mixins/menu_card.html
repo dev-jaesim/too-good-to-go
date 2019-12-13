@@ -1,6 +1,8 @@
+{% if menu.stock > 0 %}
 <div class="f-b-30per food-card-item m-t-10 m-b-10 m-l-10 m-r-10 h-200 position-relative"
     style="background-image: url({{menu.first_photo}});">
     <div class="food-card-item-title">
         <a href="{% url 'menus:detail' menu.pk %}">{{menu}} / {{menu.stock}} available</a>
     </div>
 </div>
+{% endif %}

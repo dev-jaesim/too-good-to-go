@@ -23,12 +23,21 @@
     </div>
     {% if user_obj.businesses.count > 0 %}
     <h3>{{user_obj.first_name}}'s Restaurant</h3>
+    {% if user_obj == user %}
+    <div class="m-t-10 m-b-10">
+        <button>
+            <a href="{% url 'businesses:create' %}">
+                Add Restaurant
+            </a>
+        </button>
+    </div>
+    {% endif %}
     <div>
         {% for business in user_obj.businesses.all  %}
-        <div>
+        <div class="m-b-10">
             <a href="{{business.get_absolute_url}}">{{business}}</a>
             {% if user == business.owner %}
-            <a href="{% url 'businesses:update-business' business.pk %}"> / Edit This Business</a>
+            <a href="{% url 'businesses:update-business' business.pk %}"> <button>Edit</button></a>
             {% endif %}
         </div>
         {% endfor %}

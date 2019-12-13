@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+History
+{% endblock page_title %}
+
+{% block content %}
+
+{% for purchase in purchases %}
+<div class="signup-form m-t-10">
+    <p><b>Date: </b>{{ purchase.created|date:"F Y" }}</p>
+    <p><b>Status: </b>{{ purchase.status }}</p>
+    <p><b>Menu: </b>{{ purchase.menu }}</p>
+    <p><b>Restaurant: </b>{{ purchase.business }}</p>
+    <p><b>Price: </b>${{ purchase.price }}</p>
+    <a href="#"><button>Leave feedback</button></a>
+</div>
+{% endfor %}
+
+<div>
+    {% if page_obj.has_previous %}
+    <a href="?page={{page_obj.previous_page_number}}">
+        PRV
+    </a>
+    {% endif %}
+
+    <span>
+        Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+    </span>
+
+    {% if page_obj.has_next  %}
+    <a href="?page={{page_obj.next_page_number}}">
+        NEXT
+    </a>
+    {% endif %}
+</div>
+{% endblock content %}

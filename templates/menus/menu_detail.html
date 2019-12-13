@@ -34,6 +34,8 @@
 
     {% if user.pk == menu.business.owner.pk %}
     <p><a href="{% url 'menus:update-menu' menu.pk %}">Update menu</a></p>
+    {% else %}
+    <p><a href="{% url 'purchases:order' menu.pk %}"><button>Purchase</button></a></p>
     {% endif %}
 
 </div>

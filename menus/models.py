@@ -53,7 +53,7 @@ class Menu(core_models.TimeStampedModel):
         validators=[MinValueValidator(0), MaxValueValidator(500)],
     )
     business = models.ForeignKey(
-        "businesses.Business", related_name="menus", on_delete=models.CASCADE,
+        "businesses.Business", related_name="menus", on_delete=models.CASCADE, null=True
     )
     food_type = models.ManyToManyField("FoodType", related_name="menus", blank=True)
 

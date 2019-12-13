@@ -7,14 +7,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from users import mixins as user_mixins
 from . import models, forms
+from businesses import models as business_model
 from slider import models as slider_models
 
 
 class HomeView(ListView):
 
     """ HomeView Definition """
-
-    logged_user = None
 
     model = models.Menu
     paginate_by = 5
@@ -157,3 +156,23 @@ def delete_photo(request, menu_pk, photo_pk):
         return redirect(reverse("menus:photos", kwargs={"pk": menu_pk}))
     except models.Room.DoesNotExist:
         return redirect(reverse("core:home"))
+
+
+class CreateMenuView(user_mixins.LoggedInOnlyView, FormView):
+
+    """ CreateMenuViews Definition """
+
+    form_class = forms.CreateMenuForm
+    template_name = "menus/menu_create.html"
+
+    def form_valid(self, form):
+        menu = form.save()
+        business_pk = self.kwargs.get("business_pk")
+        menu.business = business_model.Business.objects.get(pk=business_pk)
+        print("=" * 100)
+        print(business_pk)
+        print("=" * 100)
+        menu.save()
+        form.save_m2m()
+        messages.success(self.request, "Menu Uploaded")
+        return redirect(reverse("menus:detail", kwargs={"pk": menu.pk}))
