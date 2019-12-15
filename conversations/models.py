@@ -6,14 +6,23 @@ class Conversation(core_models.TimeStampedModel):
 
     """ Conversation Model Definition """
 
-    participants = models.ManyToManyField(
-        "users.User", related_name="converstation", blank=True
+    menu_owner = models.ForeignKey(
+        "users.User",
+        related_name="conversasions_menu_owner",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    asking_user = models.ForeignKey(
+        "users.User",
+        related_name="conversasions_asking_user",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
-        usernames = []
-        for user in self.participants.all():
-            usernames.append(user.username)
+        usernames = [self.menu_owner.first_name, self.asking_user.first_name]
         return ", ".join(usernames)
 
     def count_messages(self):

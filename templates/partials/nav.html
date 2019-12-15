@@ -6,6 +6,7 @@
     <li><a href="{{user.get_absolute_url}}">Profile</a></li>
     <li><a href="{% url 'lists:list-detail' %}">Favorite List({% on_list %})</a></li>
     <li><a href="{% url 'purchases:history' %}">Purchase History</a></li>
+    <li><a href="{% url 'conversations:all-conversations' %}">Messages</a></li>
     <li><a href="{% url "users:logout" %}">Log out</a></li>
     {% else %}
     <li><a href="{% url "users:signup" %}">Sign up</a></li>

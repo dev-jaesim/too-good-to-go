@@ -158,6 +158,7 @@ class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView
         "first_name",
         "last_name",
         "state",
+        "business_owner",
     )
     success_message = "Profile Updated"
 

@@ -6,7 +6,8 @@ from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.template.loader import render_to_string
 from django.urls import reverse
-from core import managers as core_managers
+
+# from core import managers as core_managers
 
 
 class User(AbstractUser):
@@ -47,7 +48,7 @@ class User(AbstractUser):
     )
     email_verified = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=20, default="", blank=True)
-    objects = core_managers.CustomModelManager()
+    # objects = core_managers.CustomModelManager()
 
     def verify_email(self):
         if self.email_verified is False:

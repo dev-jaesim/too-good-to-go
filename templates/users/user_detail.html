@@ -21,9 +21,7 @@
             <span><b>State: </b>{{user_obj.state}}</span>
         </div>
     </div>
-    {% if user_obj.businesses.count > 0 %}
-    <h3>{{user_obj.first_name}}'s Restaurant</h3>
-    {% if user_obj == user %}
+    {% if user_obj == user and user.business_owner is True %}
     <div class="m-t-10 m-b-10">
         <button>
             <a href="{% url 'businesses:create' %}">
@@ -31,6 +29,8 @@
             </a>
         </button>
     </div>
+    {% if user_obj.businesses.count > 0 %}
+    <h3>{{user_obj.first_name}}'s Restaurant</h3>
     {% endif %}
     <div>
         {% for business in user_obj.businesses.all  %}

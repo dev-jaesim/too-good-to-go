@@ -11,5 +11,5 @@ class MessageAdmin(admin.ModelAdmin):
 @admin.register(models.Conversation)
 class ConversationAdmin(admin.ModelAdmin):
 
-    list_display = ("__str__", "count_messages", "count_participants")
-    filter_horizontal = ("participants",)
+    list_display = ("__str__", "count_messages", "menu_owner", "asking_user")
+

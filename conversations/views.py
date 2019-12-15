@@ -1,25 +1,37 @@
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect, reverse, render
-from django.views.generic import View
+from django.contrib.auth.decorators import login_required
+from django.views.generic import View, ListView
 from users import models as user_models
-from . import models, forms
+from . import models
+from users import mixins
 
 
-def go_conversation(request, a_pk, b_pk):
-    user_one = user_models.User.objects.get_or_none(pk=a_pk)
-    user_two = user_models.User.objects.get_or_none(pk=b_pk)
+@login_required
+def go_conversation(request, menu_owner_pk, asking_user_pk):
+    try:
+        menu_owner = user_models.User.objects.get(pk=menu_owner_pk)
+    except menu_owner.DoesNotExist:
+        menu_owner = None
+
+    try:
+        asking_user = user_models.User.objects.get(pk=asking_user_pk)
+    except asking_user.DoesNotExist:
+        asking_user = None
+
     try:
         conversation = models.Conversation.objects.get(
-            Q(participants=user_one) & Q(participants=user_two)
+            menu_owner=menu_owner, asking_user=asking_user
         )
     except models.Conversation.DoesNotExist:
-        conversation = models.Conversation.objects.create()
-        conversation.participants.add(user_one, user_two)
+        conversation = models.Conversation.objects.create(
+            asking_user=asking_user, menu_owner=menu_owner
+        )
     return redirect(reverse("conversations:detail", kwargs={"pk": conversation.pk}))
 
 
-class ConversationDetailView(View):
+class ConversationDetailView(View, mixins.LoggedInOnlyView):
     def get(self, *args, **kwargs):
         pk = kwargs.get("pk")
         conversation = models.Conversation.objects.get_or_none(pk=pk)
@@ -42,3 +54,18 @@ class ConversationDetailView(View):
                 message=message, user=self.request.user, conversation=conversation
             )
         return redirect(reverse("conversations:detail", kwargs={"pk": pk}))
+
+
+class ConversationView(ListView, mixins.LoggedInOnlyView):
+
+    """ ConversationView Definition """
+
+    model = models.Conversation
+    paginate_by = 10
+    paginate_orphans = 3
+    context_object_name = "conversations"
+
+    def get_queryset(self):
+        return models.Conversation.objects.filter(
+            Q(asking_user=self.request.user) | Q(menu_owner=self.request.user)
+        )
