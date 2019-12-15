@@ -1,19 +1,26 @@
 {% extends 'base.html' %}
 
 {% block page_title %}
-History
+Favorite List
 {% endblock page_title %}
 
 {% block content %}
 
-{% for purchase in purchases %}
+{% for list in lists %}
 <div class="signup-form m-t-10">
-    <p><b>Date: </b>{{ purchase.created|date:"F Y" }}</p>
-    <p><b>Status: </b>{{ purchase.status }}</p>
-    <p><b>Menu: </b>{{ purchase.menu }}</p>
-    <p><b>Restaurant: </b>{{ purchase.business }}</p>
-    <p><b>Price: </b>${{ purchase.price }}</p>
-    <a href="{% url 'reviews:create-review' purchase.business.pk %}"><button>Leave feedback</button></a>
+    <p><b>Menu: </b><a href="{% url 'menus:detail' list.menu.pk %}">{{ list.menu }}</a></p>
+    <p>
+        <b>Food Type: </b>
+        {% for f in list.menu.food_type.all %}
+        {% if forloop.last %}
+        {{f}}
+        {% else %}
+        {{f}},
+        {% endif %}
+        {% endfor %}
+    </p>
+    <p><b>Price: </b>{{ list.menu.price }}</p>
+    <a href="{% url 'lists:delete-item' list.pk %}"><button>Delete this menu</button></a>
 </div>
 {% endfor %}
 

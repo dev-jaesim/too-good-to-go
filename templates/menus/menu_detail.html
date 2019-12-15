@@ -17,7 +17,13 @@
         {{menu.business.total_rating}}
     </p>
     <p>
-        <b>Owner: </b><a href="{{menu.business.owner.get_absolute_url}}">{{menu.business.owner}}</a></p>
+        <b>Owner: </b><a href="{{menu.business.owner.get_absolute_url}}">{{menu.business.owner}}</a>
+
+        {% if menu.business.owner.pk != user.pk %}
+        <a href="{% url 'conversations:go' menu.business.owner.pk user.pk %}">(Send a message)</a>
+        {% endif %}
+
+    </p>
     <p><b>Available State: </b>{{menu.business.state}}</p>
     <p><b>Food Type: </b>
         {% for f in menu.food_type.all %}
@@ -35,6 +41,7 @@
     {% if user.pk == menu.business.owner.pk %}
     <p><a href="{% url 'menus:update-menu' menu.pk %}">Update menu</a></p>
     {% else %}
+    <p><a href="{% url 'lists:add-to-list' menu.pk %}"><button>Add to my favorite list</button></a></p>
     <p><a href="{% url 'purchases:order' menu.pk %}"><button>Purchase</button></a></p>
     {% endif %}
 

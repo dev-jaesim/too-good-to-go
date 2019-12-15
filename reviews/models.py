@@ -34,3 +34,12 @@ class Review(core_models.TimeStampedModel):
         return round(avg, 2)
 
     rating_average.short_description = "Avg"
+
+    def get_each_rating(self):
+        ratings = {
+            "taste": round(float(self.taste), 2),
+            "portion": round(float(self.portion), 2),
+            "value": round(float(self.value), 2),
+            "location": round(float(self.location), 2),
+        }
+        return ratings

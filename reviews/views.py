@@ -1,25 +1,23 @@
-from django.http import Http404
-from django.views.generic import View, ListView, DetailView, UpdateView, FormView
-from django.shortcuts import render, reverse, redirect
-from django.core.paginator import Paginator
+from django.views.generic import FormView
+from django.shortcuts import reverse, redirect
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from users import mixins as user_mixins
-from . import models, forms
+from . import forms
 from businesses import models as business_model
-from slider import models as slider_models
 
 
-class CreateReviewView(user_mixins.LoggedInOnlyView, FormView):
+class CreateReviewView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, FormView):
 
     """ CreateReviewView Definition """
 
-    template_name = "menus/photo_create.html"
-    form_class = forms.CreatePhotoForm
+    template_name = "reviews/review_create.html"
+    form_class = forms.CreateReviewForm
+    success_message = "Review Uploaded"
 
     def form_valid(self, form):
-        pk = self.kwargs.get("pk")
-        form.save(pk)
-        messages.success(self.request, "Photo Uploaded")
-        return redirect(reverse("menus:photos", kwargs={"pk": pk}))
+        review = form.save()
+        business_pk = self.kwargs.get("pk")
+        review.business = business_model.Business.objects.get(pk=business_pk)
+        review.user = self.request.user
+        review.save()
+        return redirect(reverse("businesses:profile", kwargs={"pk": business_pk}))

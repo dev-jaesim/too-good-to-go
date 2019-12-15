@@ -17,16 +17,21 @@
         <span><b>State: </b>{{business_obj.state}}</span>
     </div>
     <div>
-        <span><b>Rate: </b>{{business_obj.total_rating}}</span>
+        <span><b>Taste: </b>{{business_obj.each_rating.taste}}, <b>Portion: </b>{{business_obj.each_rating.portion}},
+            <b>Value: </b>{{business_obj.each_rating.value}}, <b>Location:
+            </b>{{business_obj.each_rating.location}} / <b>Avg: </b>{{business_obj.total_rating}}</span>
     </div>
     <div>
         <span><b>Review: </b>{{business_obj.reviews.count}}</span>
+        {% for r in business_obj.reviews.all %}
         <div class="review">
-            {% for r in business_obj.reviews.all %}
             <p class="review-item"><b>{{r.user}} / {{r.created|date:'F-Y'}}:</b></p>
+            <p><b>Taste: </b>{{r.get_each_rating.taste}}, <b>Portion: </b>{{r.get_each_rating.portion}},
+                <b>Value: </b>{{r.get_each_rating.value}}, <b>Location:
+                </b>{{r.get_each_rating.location}}</p>
             <p>{{r.review}}</p>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
 
     {% if business_obj.owner == user %}

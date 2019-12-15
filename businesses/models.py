@@ -53,5 +53,28 @@ class Business(core_models.TimeStampedModel):
 
     total_rating.short_description = "Avg"
 
+    def each_rating(self):
+        all_reviews = self.reviews.all()
+        ratings = {
+            "taste": 0,
+            "portion": 0,
+            "value": 0,
+            "location": 0,
+        }
+
+        if all_reviews.count() > 0:
+            for review in all_reviews:
+                ratings["taste"] += review.get_each_rating()["taste"]
+                ratings["portion"] += review.get_each_rating()["portion"]
+                ratings["value"] += review.get_each_rating()["value"]
+                ratings["location"] += review.get_each_rating()["location"]
+
+            ratings["taste"] = round(ratings["taste"] / len(all_reviews), 2)
+            ratings["portion"] = round(ratings["portion"] / len(all_reviews), 2)
+            ratings["value"] = round(ratings["value"] / len(all_reviews), 2)
+            ratings["location"] = round(ratings["location"] / len(all_reviews), 2)
+
+        return ratings
+
     def get_absolute_url(self):
         return reverse("businesses:profile", kwargs={"pk": self.pk})

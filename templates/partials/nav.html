@@ -1,7 +1,10 @@
+{% load count_list_item %}
+
 <a href="{% url 'core:home' %}" class="flex f-g-1 align-item-center justify-content-center">GOOD</a>
 <ul class="flex f-g-6 m-b-0 child-has-m-r-40px">
     {% if user.is_authenticated %}
     <li><a href="{{user.get_absolute_url}}">Profile</a></li>
+    <li><a href="{% url 'lists:list-detail' %}">Favorite List({% on_list %})</a></li>
     <li><a href="{% url 'purchases:history' %}">Purchase History</a></li>
     <li><a href="{% url "users:logout" %}">Log out</a></li>
     {% else %}
