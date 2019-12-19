@@ -20,7 +20,9 @@
         <b>Owner: </b><a href="{{menu.business.owner.get_absolute_url}}">{{menu.business.owner}}</a>
 
         {% if menu.business.owner.pk != user.pk %}
+        {% if user.is_anonymous != True %}
         <a href="{% url 'conversations:go' menu.business.owner.pk user.pk %}">(Send a message)</a>
+        {% endif %}
         {% endif %}
 
     </p>

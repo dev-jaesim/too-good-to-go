@@ -10,7 +10,7 @@ Login
 {% block content %}
 {% include 'partials/social_login.html' %}
 <div class="signup-form">
-    {% include 'mixins/auth/auth_form.html' with form=form cta="Sign up" %}
+    {% include 'mixins/auth/auth_form.html' with form=form cta="Log in" %}
     <div class="have-account">
         <span>Don't have an account?</span>
         <a href="{% url "users:signup" %}">Sign up</a>
